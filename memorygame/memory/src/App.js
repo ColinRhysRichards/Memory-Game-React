@@ -1,85 +1,92 @@
-// import React, { Component } from 'react';
-// // import logo from './logo.svg';
-// import './App.css';
-// import './components/Nav/Nav';
-
-import React from "react";
+import React, { Component } from 'react';
+import './App.css';
 import Nav from "./components/Nav";
-import Jumbotron from "./components/Jumbotron";
-// import Grid from "./components/Grid";
+import FriendCard from "./components/Grid";
+import friends from "./images.json";
+import Column from "./Column";
+import Row from "./Row";
 
-const App = () => (
+function shuffleFriends(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+};
+
+class App extends Component {
+  state = {
+    friends,
+    currentScore: 0,
+    topScore: 0,
+    rightWrong: "",
+    clicked: [],
+  };
+
+  handleClick = id => {
+    if (this.state.clicked.indexOf(id) === -1) {
+      this.handleIncrement();
+      this.setState({ clicked: this.state.clicked.concat(id) });
+    } else {
+      this.handleReset();
+    }
+  };
+
+  handleIncrement = () => {
+    const newScore = this.state.currentScore + 1;
+    this.setState({
+      currentScore: newScore,
+      rightWrong: ""
+    });
+    if (newScore >= this.state.topScore) {
+      this.setState({ topScore: newScore });
+    }
+    else if (newScore === 12) {
+      this.setState({ rightWrong: "You win!" });
+    }
+    this.handleShuffle();
+  };
+
+  handleReset = () => {
+    this.setState({
+      currentScore: 0,
+      topScore: this.state.topScore,
+      rightWrong: "Glaven!",
+      clicked: []
+    });
+    this.handleShuffle();
+  };
+
+  handleShuffle = () => {
+    let shuffledFriends = shuffleFriends(friends);
+    this.setState({ friends: shuffledFriends });
+  };
+
+  render() {
+    return (
   <div className="container">
-    <Nav />
-    <Jumbotron />
-    {/* <Grid/> */}
-  </div>
+    <Nav  title="Utah Jazz Click Game"
+          score={this.state.currentScore}
+          topScore={this.state.topScore}
+          rightWrong={this.state.rightWrong}/>
+
+           <Row>
+            {this.state.friends.map(friend => (
+              <Column size="md-3 sm-6">
+                <FriendCard
+                  key={friend.id}
+                  handleClick={this.handleClick}
+                  handleIncrement={this.handleIncrement}
+                  handleReset={this.handleReset}
+                  handleShuffle={this.handleShuffle}
+                  id={friend.id}
+                  image={friend.image}
+                />
+              </Column>
+            ))}
+          </Row>
+    </div>
 );
-
-// class App extends Component {
-
-//   state = {
-//     grid: [
-//       {
-//         name: "Image 1",
-//         url: "https://www.yo.com/photos/eroiwjet",
-//         clicked: false
-//       },
-//       {
-//         name: "Image 1",
-//         url: "https://www.yo.com/photos/eroiwjet",
-//         clicked: false
-//       },
-//       {
-//         name: "Image 1",
-//         url: "https://www.yo.com/photos/eroiwjet",
-//         clicked: false
-//       }
-//     ],
-//     usersScore: 0,
-//     name: "devyn"
-//   }
- 
-//   clickImage = (imageObj, index) => {
-//     if (!imageObj.clicked) {
-//       let newGrid = this.state.grid;
-//       newGrid[index].clicked = true;
-//       this.setState({
-//         grid: newGrid,
-//         ...this.state
-//       })
-//     }
-//   }
- 
-//   render() {
-//     return (
-//       <div className="App">
-//         <Nav />
-//         <div>Jumbotron</div>
-//         <div>
-//           {this.state.grid.map((imageObj, index) => (
-//             <Image key={index} image={imageObj} onClick={() => this.clickImage(imageObj, index)} />
-//           ))}
-//         </div>
-//       </div>
-//     );
-//   }
-//  }
-
-// class App extends Component {
-//   render() {
-//     return (
-//       <div className="App">
-//         <header className="App-header">
-//           <img src={logo} className="App-logo" alt="logo" />
-//           <h1 className="App-title">Welcome to React</h1>
-//         </header>
-//         <p className="App-intro">
-//           To get started, edit <code>src/App.js</code> and save to reload.
-//         </p>
-//       </div>
-//     );
-//   }
-// }
-
+}}
+  
 export default App;
