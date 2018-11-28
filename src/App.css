@@ -1,0 +1,23 @@
+img{
+      vertical-align: middle;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 5px;
+    padding: 0px;
+    margin: 2px;
+    border-color: cadetblue;
+}
+
+.card {
+  position: relative;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: none;
+  border-radius: .25rem;
+}

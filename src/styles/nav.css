@@ -1,0 +1,27 @@
+h1{
+    font-family: 'Anton', sans-serif;
+    font-size: 3em;
+    color: #ff8400;
+    text-align: center;
+}
+
+#rw{
+    font-family: 'Roboto', sans-serif;
+    font-size: 2em;
+    color: #1f2186;
+    text-align: center;
+}
+
+#cur-sco{
+    font-family: 'Roboto', sans-serif;
+    font-size: 2em;
+    color: #1f2186;
+    text-align: center;
+}
+
+#top-sco{
+    font-family: 'Roboto', sans-serif;
+    font-size: 2em;
+    color: #1f2186;
+    text-align: center;
+}
